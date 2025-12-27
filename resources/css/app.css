@@ -1,0 +1,181 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
+
+@layer theme, base, components, utilities;
+
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/preflight.css" layer(base);
+@import "tailwindcss/utilities.css" layer(utilities);
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source '../**/*.blade.php';
+@source '../**/*.js';
+
+@import "flatpickr/dist/flatpickr.min.css";
+
+@font-face {
+  font-family: "Tower Ruins";
+  font-style: "normal";
+  font-weight: 300;
+  font-display: swap;
+  src: url("../fonts/towerruins/towerruins.ttf") format("truetype");
+}
+
+
+@theme {
+  --font-open-sans: "Open Sans", sans-serif;
+  --font-tower-ruins: "Tower Ruins", sans-serif;
+
+  --size-button-icon: 25px;
+
+  --color-ci-black: #000;
+  --color-ci-gray-dark: #333;
+  --color-ci-gray-light: #d6d6d6;
+  --color-ci-white: #fff;
+  --color-ci-orange-light: #ea8927;
+  --color-ci-orange-dark: #ea6927;
+  --color-table-odd: #111;
+  --color-table-even: #222;
+
+  --text-shadow-black-on-orange: 0px 0px 30px var(--color-white);
+}
+
+@layer utilities {
+  .bg-rockag {
+    background-image: url("../img/logo_rockag.png");
+    background-position: center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-size: 50%;
+  }
+
+  .my-button {
+    @apply bg-gray-300 hover:bg-gray-200 py-2 px-4 rounded mb-4 inline-block sm:w-auto;
+    white-space: nowrap;
+  }
+
+  .textlink {
+    @apply underline whitespace-nowrap;
+
+    &[rel=external] {
+      &::after {
+        content: "";
+        display: inline-block;
+        background-image: url("../img/external-link.svg");
+        background-size: contain;
+        height: calc(var(--spacing) * 4);
+        aspect-ratio: 1 / 1;
+        position: relative;
+        top: calc(var(--spacing) * 0.5)
+      }
+    }
+  }
+
+  .icon-button {
+    @apply inline-block text-left relative px-3 py-2 rounded font-bold text-sm md:text-base bg-ci-gray-dark text-ci-white transition-colors duration-300 hover:bg-ci-orange-light hover:text-ci-black cursor-pointer;
+    padding-right: calc(((var(--spacing) * 2) * 2) + var(--size-button-icon));
+
+    svg {
+      @apply absolute top-0 right-0 p-2;
+      height: 100%;
+      aspect-ratio: 1 / 1;
+    }
+
+    &.big-button {
+      @apply px-6 py-4;
+      padding-right: calc(((var(--spacing) * 6) * 2) + var(--size-button-icon));
+
+      &.no-text {
+        height: 88px;
+        padding-left: calc(var(--spacing) * 4);
+      }
+    }
+
+    &.red-button {
+      @apply bg-red-600 hover:bg-ci-white hover:text-red-600;
+    }
+
+    &.icon-arrow {
+      &::after {
+        content: "";
+        display: block;
+        position: absolute;
+        right: calc(var(--spacing) * 2);
+        bottom: calc(var(--spacing) * 3);
+        background-image: url("../img/arrow-right-white.png");
+        width: var(--size-button-icon);
+        height: var(--size-button-icon);
+      }
+      &:hover::after {
+        background-image: url("../img/arrow-right-black.png");
+      }
+    }
+
+    &.no-text {
+      padding-left: 0;
+      height: 40px;
+      
+      & > span {
+        display: none;
+      }
+    }
+
+    > .burg {
+      display: block;
+      position: absolute;
+      bottom: 0;
+      right: calc((var(--spacing) * 4) + var(--size-button-icon));
+      background-image: url("../img/burg.png");
+      background-size: cover;
+      width: 15%;
+      aspect-ratio: 682 / 362;
+    }
+  }
+
+  .header-bg-image {
+    background-color: var(--color-ci-orange-light);
+    background-image: url("../img/stage-bg.jpg");
+    background-size: cover;
+    background-position: bottom center;
+  }
+
+  .page-footer {
+    @apply bg-ci-white text-ci-black;
+    position: relative;
+
+    &::after {
+      content: "";
+      position: absolute;
+      right: 1%;
+      bottom: 100%;
+      width: 30vw;
+      max-width: 300px;
+      background-image: url("../img/crowd.png");
+      background-size: contain;
+      aspect-ratio: 940 / 271;
+    }
+  }
+
+  .page-header-box-shadow {
+    -webkit-box-shadow: 0px -40px 50px 25px var(--color-ci-orange-light);
+    box-shadow: 0px -40px 50px 25px var(--color-ci-orange-light);
+  }
+
+  .section-header {
+    @apply font-tower-ruins text-2xl md:text-3xl lg:text-4xl;
+  }
+
+  input[type=text], input[type=number], textarea {
+    @apply text-sm md:text-base text-ci-white outline-0 border-1 border-ci-gray-light bg-ci-gray-dark rounded py-1 md:py-2 px-2;
+
+    &[readonly] {
+      @apply text-ci-gray-light;
+    }
+
+    &.error {
+      @apply border-red-700;
+    }
+  }
+}
+
+
