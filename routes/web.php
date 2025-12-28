@@ -1,8 +1,13 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\HomepageController;
+use App\Http\Controllers\PlanController;
 use Illuminate\Support\Facades\Route;
 
+/** 
+ * General routes
+ **/
 Route::get(
     '/',
     [HomepageController::class, 'homepage'])
@@ -14,6 +19,21 @@ Route::get(
         return view('imprint');
     })
     ->name('imprint');
+
+/**
+ * Authenticated routes
+ */
+Route::get(
+    '/admin',
+    [AdminController::class, 'admin']
+    )
+    ->name('admin');
+
+Route::get(
+    '/plan/create',
+    [PlanController::class, 'create']
+    )
+    ->name('plan.create');
 
 Route::get('/info', function () {
     Log::info('Phpinfo page visited');
