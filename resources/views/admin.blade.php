@@ -57,11 +57,11 @@
 
                     <div class="align-top md:table-cell text-sm lg:text-base mb-2 md:mb-0 md:p-2 whitespace-nowrap">
                         <div class="flex flex-col gap-2">
-                            <a class="icon-button w-auto" href="{{route('plan.show', ['plan' => $plan])}}" target="_blank" title="{{ __('admin.linkPublic') }}">
+                            <a class="icon-button w-auto" href="{{route('plan.view.user', ['plan' => $plan])}}" target="_blank" title="{{ __('admin.linkPublic') }}">
                                 <span>{{ __('admin.linkPublic') }}</span>
                                 @include('partials.svg.share')
                             </a>
-                            <a class="icon-button w-auto" href="{{route('plan.admin', ['plan' => $plan])}}" target="_blank" title="{{ __('admin.linkAdmin') }}">
+                            <a class="icon-button w-auto" href="{{route('plan.view.admin', ['plan' => $plan])}}" target="_blank" title="{{ __('admin.linkAdmin') }}">
                                 <span>{{ __('admin.linkAdmin') }}</span>
                                 @include('partials.svg.pencil')
                             </a>

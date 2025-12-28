@@ -3,10 +3,11 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\HomepageController;
 use App\Http\Controllers\PlanController;
+use App\Http\Controllers\ShiftController;
 use Illuminate\Support\Facades\Route;
 
 /** 
- * General routes
+ * Static routes
  **/
 Route::get(
     '/',
@@ -21,7 +22,7 @@ Route::get(
     ->name('imprint');
 
 /**
- * Authenticated routes
+ * Admin overview
  */
 Route::get(
     '/admin',
@@ -29,11 +30,100 @@ Route::get(
     )
     ->name('admin');
 
+/**
+ *  === Plan ===
+ *      creation/editing routes
+ */
 Route::get(
-    '/plan/create',
+    '/admin/plan',
     [PlanController::class, 'create']
     )
     ->name('plan.create');
+
+Route::post(
+    '/admin/plan',
+    [PlanController::class, 'store']
+    )
+    ->name('plan.store');
+
+Route::get(
+    '/admin/plan/{plan:edit_id}/edit',
+    [PlanController::class, 'edit']
+    )
+    ->name('plan.edit');
+
+Route::put(
+    '/admin/plan/{plan:edit_id}/edit',
+    [PlanController::class, 'update']
+    )
+    ->name('plan.update');
+
+Route::get(
+    '/admin/plan/{plan:edit_id}',
+    [PlanController::class, 'admin']
+    )
+    ->name('plan.view.admin');
+
+Route::delete(
+    '/admin/plan/{plan:edit_id}/destroy',
+    [PlanController::class, 'destroy']
+    )
+    ->name('plan.destroy');
+
+Route::get(
+    '/plan/{plan:view_id}',
+    [PlanController::class, 'show']
+    )
+    ->name('plan.view.user');
+
+/**
+ *  === Subscription ===
+ *      creation/editing routes
+ */
+Route::get(
+    '/admin/plan/{plan:edit_id}/subscriptions',
+    [PlanController::class, 'admin_subscriptions']
+    )
+    ->name('plan.subscriptions');
+
+/**
+ *  === Shift ===
+ *      creation/editing routes
+ */
+Route::get(
+    '/plan/{plan:edit_id}/shift',
+    [ShiftController::class, 'create']
+    )
+    ->name('plan.shift.create');
+
+Route::post(
+    '/plan/{plan:edit_id}/shift',
+    [ShiftController::class, 'store']
+    )
+    ->name('plan.shift.store');
+
+Route::get(
+    '/plan/{plan:edit_id}/shift/{shift}/edit',
+    [ShiftController::class, 'edit']
+    )
+    ->name('plan.shift.edit');
+
+Route::put(
+    '/plan/{plan:edit_id}/shift/{shift}/edit',
+    [ShiftController::class, 'update']
+    )
+    ->name('plan.shift.update');
+
+Route::delete(
+    '/plan/{plan:edit_id}/shift/{shift}/delete',
+    [ShiftController::class, 'destroy']
+    )
+    ->name('plan.shift.destroy');
+
+/**
+ * Public routes
+ */
+
 
 Route::get('/info', function () {
     Log::info('Phpinfo page visited');

@@ -1,0 +1,42 @@
+<?php
+
+return [
+    "pageTitle" => [
+        "create" => "Neuen Schichtplan erstellen",
+        "editSuffix" => " (Grundeinstellungen)",
+    ],
+    "headline" => [
+        "create" => "Neuen Schichtplan erstellen",
+        "edit" => "Schichtplan bearbeiten",
+    ],
+
+    "title" => "Titel",
+    "planDesc" => "Beschreibung",
+    "contactDesc" => "Kontakt-Info",
+    "showOnHomepage" => "Link zum Schichtplan auf der Startseite anzeigen",
+    "allowSubscribe" => "Helfer*innen dürfen sich eintragen",
+    "allowUnsubscribe" => "Helfer*innen dürfen sich selbstständig austragen",
+
+    'planAdminTitle' => 'Schichtplan konfigurieren',
+    'planAdminIntro' => 'Auf dieser Seite kannst du den Schichtplan konfigurieren. Hier können auch die verfügbaren Schichten angelegt und bearbeitet werden, in die sich Helfer*innen später eintragen können.',
+    'planAdminIntroLinkDescription' => 'Über den folgenden Link ist der Schichtplan für Helfer*innen aufrufbar',
+    'planAdminBasicSettingsTitle' => 'Grundeinstellungen',
+    'planAdminShiftsTitle' => 'Schichten',
+    'planAdminShiftsIntro' => 'Gruppiert nach Kategorie, sortiert nach Datum und Uhrzeit',
+    'planAdminSubscriptionsTitle' => 'Helfer*innen',
+    'planAdminSubscriptionsIntro' => 'Hier findest du eine Übersicht über alle Helfer*innen, die bereits für Schichten eingetragen sind. Du kannst die Einträge hier auch bearbeiten oder löschen.',
+    
+    'copyLink' => 'Link kopieren',
+    'copyLinkSuccess' => 'Link kopiert!',
+
+    'show_edit_subscriptions_link' => 'Details / bearbeiten',
+    'editSettings' => 'Bearbeiten',
+    'addShift' => 'Schicht hinzufügen',
+
+    'statistics' => [
+        'subscriptionsAvailable' => 'Zu besetzende Positionen',
+        'subscriptionsFull' => 'Bereits besetzte Positionen',
+        'shiftsAvailable' => 'Anzahl Schichten insgesamt',
+        'shiftsFull' => 'Bereits vollständig gefüllte Schichten',
+    ],
+];
