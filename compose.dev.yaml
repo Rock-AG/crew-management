@@ -85,6 +85,8 @@ services:
 
   mailhog:
     image: mailhog/mailhog
+    networks:
+      - rockag-crew-dev
     ports:
       - "${MAILHOG_SMTP_PORT}:${MAILHOG_SMTP_PORT}"
       - "${MAILHOG_UI_PORT}:${MAILHOG_UI_PORT}"
