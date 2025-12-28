@@ -83,11 +83,6 @@ services:
     networks:
       - rockag-crew-dev
 
-  redis:
-    image: redis:alpine
-    networks:
-      - rockag-crew-dev
-  
   mailhog:
     image: mailhog/mailhog
     ports:
