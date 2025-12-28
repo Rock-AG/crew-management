@@ -176,6 +176,16 @@
       @apply border-red-700;
     }
   }
+
+  .percentage-low {
+    @apply bg-red-300;
+  }
+  .percentage-medium {
+    @apply bg-yellow-300;
+  }
+  .percentage-high {
+    @apply bg-green-300;
+  }
 }
 
 

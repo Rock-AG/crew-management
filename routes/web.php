@@ -4,6 +4,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\HomepageController;
 use App\Http\Controllers\PlanController;
 use App\Http\Controllers\ShiftController;
+use App\Http\Controllers\SubscriptionController;
 use Illuminate\Support\Facades\Route;
 
 /** 
@@ -82,40 +83,94 @@ Route::get(
  */
 Route::get(
     '/admin/plan/{plan:edit_id}/subscriptions',
-    [PlanController::class, 'admin_subscriptions']
+    [PlanController::class, 'subscriptions']
     )
     ->name('plan.subscriptions');
+
+Route::get(
+    '/plan/{plan:view_id}/shift/{shift}/subscribe',
+    [SubscriptionController::class, 'create']
+    )
+    ->name('subscription.create');
+
+Route::post(
+    '/plan/{plan:view_id}/shift/{shift}/subscribe',
+    [SubscriptionController::class, 'store']
+    )
+    ->name('subscription.store');
+
+Route::get(
+    '/plan/{plan:view_id}/shift/{shift}/unsubscribe',
+    [SubscriptionController::class, 'remove']
+    )
+    ->name('subscription.remove');
+
+Route::post(
+    '/plan/{plan:view_id}/shift/{shift}/unsubscribe',
+    [SubscriptionController::class, 'doRemove']
+    )
+    ->name('subscription.doRemove');
+
+Route::get(
+    '/plan/{plan:view_id}/shift/{shift}/unsubscribe/{unsubscribeConfirmationKey}',
+    [SubscriptionController::class, 'confirmRemove']
+    )
+    ->name('subscription.remove.confirm');
+
+Route::post(
+    '/plan/{plan:view_id}/shift/{shift}/unsubscribe/{unsubscribeConfirmationKey}',
+    [SubscriptionController::class, 'doConfirmRemove']
+    )
+    ->name('subscription.remove.doConfirm');
+
+Route::get(
+    '/plan/{plan:edit_id}/shift/{shift}/{subscription}/edit',
+    [SubscriptionController::class, 'edit']
+    )
+    ->name('subscription.edit');
+
+Route::put(
+    '/plan/{plan:edit_id}/shift/{shift}/{subscription}',
+    [SubscriptionController::class, 'update']
+    )
+    ->name('subscription.update');
+
+Route::delete(
+    '/plan/{plan:edit_id}/shift/{shift}/{subscription}',
+    [SubscriptionController::class, 'destroy']
+    )
+    ->name('subscription.destroy');
 
 /**
  *  === Shift ===
  *      creation/editing routes
  */
 Route::get(
-    '/plan/{plan:edit_id}/shift',
+    '/admin/plan/{plan:edit_id}/shift',
     [ShiftController::class, 'create']
     )
     ->name('plan.shift.create');
 
 Route::post(
-    '/plan/{plan:edit_id}/shift',
+    '/admin/plan/{plan:edit_id}/shift',
     [ShiftController::class, 'store']
     )
     ->name('plan.shift.store');
 
 Route::get(
-    '/plan/{plan:edit_id}/shift/{shift}/edit',
+    '/admin/plan/{plan:edit_id}/shift/{shift}/edit',
     [ShiftController::class, 'edit']
     )
     ->name('plan.shift.edit');
 
 Route::put(
-    '/plan/{plan:edit_id}/shift/{shift}/edit',
+    '/admin/plan/{plan:edit_id}/shift/{shift}/edit',
     [ShiftController::class, 'update']
     )
     ->name('plan.shift.update');
 
 Route::delete(
-    '/plan/{plan:edit_id}/shift/{shift}/delete',
+    '/admin/plan/{plan:edit_id}/shift/{shift}/delete',
     [ShiftController::class, 'destroy']
     )
     ->name('plan.shift.destroy');

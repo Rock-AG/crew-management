@@ -6,6 +6,8 @@ return [
     "buttonSave" => "Speichern",
     "buttonCancel" => "Abbrechen",
     "buttonBack" => "Zurück",
+    "buttonDelete" => "Löschen",
+    "buttonEdit" => "Bearbeiten",
     "mail" => [
         "greeting" => "Hi :nickname!",
         "salutation" => "Liebe Grüße<br>Deine Rock AG",

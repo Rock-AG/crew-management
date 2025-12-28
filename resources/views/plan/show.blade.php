@@ -15,13 +15,13 @@
             <p class="text-sm md:text-base mb-2">{{ $plan->contact }}</p>
         </div>
 
-        {{-- Shifts grouped by type --}}
+        {{-- Shifts grouped by category --}}
         <div class="accordion-container mb-4">
             @foreach($shiftsGroupedByCategory as $category => $shifts)
                 <div class="ac group mb-2 md:mb-4">
 
                     <h3 class="ac-header flex">
-                        <button type="button" class="ac-trigger flex gap-2 grow items-center py-2 border-b-ci-white border-b-1 cursor-pointer text-left">
+                        <button type="button" class="ac-trigger flex gap-2 grow items-center p-2 border-b-ci-white border-b-1 cursor-pointer text-left">
                             <span class="text-lg md:text-2xl font-semibold">{{ $category }}</span>
                             <span class="text-base md:text-lg whitespace-nowrap">({{ trans_choice('plan.shiftsPluralized', $shifts->count()) }})</span>
                             <span class="group-[.is-active]:rotate-180 ml-auto">
@@ -39,7 +39,7 @@
                             <div class="hidden md:table-header-group">
                                 <div class="table-cell italic text-sm whitespace-nowrap bg-table-odd p-2">{{ __('shift.titleDescription') }}</div>
                                 <div class="table-cell italic text-sm whitespace-nowrap bg-table-odd p-2">{{ __('shift.dateTime') }}</div>
-                                <div class="table-cell italic text-sm whitespace-nowrap bg-table-odd w-1 p-2">{{ __('shift.action') }}</div>
+                                <div class="table-cell italic text-sm whitespace-nowrap bg-table-odd w-1 p-2">{{ __('general.actions') }}</div>
                                 <div class="table-cell italic text-sm whitespace-nowrap bg-table-odd p-2 text-center">{{ __('shift.subscriptionsDesc') }}</div>
                             </div>
 
@@ -60,16 +60,16 @@
 
                                             {{-- Subscribe --}}
                                             @if ($plan->allow_subscribe && $shift->team_size > $shift->subscriptions->count())
-                                                <a class="icon-button w-auto" href="{{route('plan.subscription.create', ['plan' => $shift->plan->view_id, 'shift'=> $shift])}}">
-                                                    <span>{{ __('shift.subscribe') }}</span>
+                                                <a class="icon-button w-auto" href="{{route('subscription.create', ['plan' => $shift->plan->view_id, 'shift'=> $shift])}}" title="{{ __('shift.buttonSubscribe') }}">
+                                                    <span>{{ __('shift.buttonSubscribe') }}</span>
                                                     @include('partials.svg.rock-hand')
                                                 </a>
                                             @endif
 
                                             {{-- Unsubscribe --}}
                                             @if ($plan->allow_unsubscribe && strtotime($shift->start) > strtotime('+2 day') && $shift->subscriptions->count() > 0)
-                                                <a class="icon-button w-auto" href="{{route('plan.subscription.remove', ['plan' => $shift->plan->view_id, 'shift'=> $shift])}}">
-                                                    <span>{{ __('shift.unsubscribe') }}</span>
+                                                <a class="icon-button w-auto" href="{{route('subscription.remove', ['plan' => $shift->plan->view_id, 'shift'=> $shift])}}" title="{{ __('shift.buttonSubscribe') }}">
+                                                    <span>{{ __('shift.buttonUnsubscribe') }}</span>
                                                     @include('partials.svg.frown')
                                                 </a>
                                             @endif

@@ -51,7 +51,7 @@ class PlanController extends Controller
         $plan = Plan::create($data);
 
         Session::flash('info', __('plan.successfullyCreated'));
-        return redirect()->route('plan.admin', ['plan' => $plan]);
+        return redirect()->route('plan.view.admin', ['plan' => $plan]);
     }
 
     /**
@@ -96,6 +96,21 @@ class PlanController extends Controller
     }
 
     /**
+     * Display an overview of subscriptions for a specified plan.
+     *
+     * @param Plan $plan
+     * @return Response
+     */
+    public function subscriptions(Request $request, Plan $plan)
+    {
+        $orderBy = $request->input('orderBy') ?? "title";
+        $search = $request->input('search') ?? "";
+        $shifts = $plan->getShifts($orderBy, $search)->get();
+
+        return view('plan.subscriptions')->with(['plan' => $plan, 'shifts' => $shifts]);
+    }
+
+    /**
      * Remove the plan from storage.
      *
      * @param  \App\Models\Plan  $plan
@@ -117,9 +132,38 @@ class PlanController extends Controller
     public function show(Plan $plan)
     {
         $shiftsGroupedByCategory = $plan->shifts->groupBy(function(Shift $item) {
-            return $item->type !== '' ? $item->type : __('shift.noType');
+            return $item->category !== '' ? $item->category : __('shift.noCategory');
         });
 
         return view('plan.show', ['plan' => $plan, 'shiftsGroupedByCategory' => $shiftsGroupedByCategory]);
+    }
+
+    /**
+     * Build formatted date string like:
+     *      Mo. 10.1 10:00 - 12:00
+     *      Mo. 10.1 10:00 - Di.11.1 12:00
+     */
+    public static function buildDateString(string $start, string $end, bool $inline = false): string  {
+        $start = \Illuminate\Support\Facades\Date::parse($start);
+        $end = \Illuminate\Support\Facades\Date::parse($end);
+        $hours = $start->diffInHours($end);
+        $res = "";
+        if($start->isSameDay($end)) {
+            $res .= $start->isoFormat("dd. OD. MMMM YYYY | HH:mm");
+            $res .= " - ";
+            $res .= $end->isoFormat('HH:mm');
+        } elseif($start->isSameYear($end)) {
+            $res .= $start->isoFormat("dd. OD. MMMM YYYY | HH:mm");
+            $res .= "&nbsp; -";
+            $res .= $inline ? "&nbsp;" : "<br>";
+            $res .= $end->isoFormat("dd. OD. MMMM YYYY | HH:mm");
+        } else {
+            $res .= $start->isoFormat("dd. OD. MMMM YYYY HH:mm");
+            $res .= $inline ? "&nbsp;" : "<br>";
+            $res .= " - ";
+            $res .= $inline ? "&nbsp;" : "<br>";
+            $res .= $end->isoFormat("dd. OD. MMMM YYYY | HH:mm");
+        }
+        return $res;
     }
 }

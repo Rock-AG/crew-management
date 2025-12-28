@@ -1,6 +1,6 @@
 @extends('layout.app', [
     'includeHeader' => true,
-    'pageTitle' => $plan->title . ' (Admin)'
+    'pageTitle' => $plan->title . __('plan.pageTitle.adminSuffix'),
 ])
 
 @section('body')
@@ -146,10 +146,10 @@
 
                             <div class="hidden md:table-header-group">
                                 <div class="table-cell italic text-sm whitespace-nowrap bg-table-odd p-2">{{ __('shift.titleDescription') }}</div>
-                                <div class="hidden lg:table-cell italic text-sm whitespace-nowrap bg-table-odd p-2">{{ __('plan.contactInfo') }}</div>
+                                <div class="hidden lg:table-cell italic text-sm whitespace-nowrap bg-table-odd p-2">{{ __('shift.contactInfo') }}</div>
                                 <div class="table-cell italic text-sm whitespace-nowrap bg-table-odd p-2">{{ __('shift.dateTime') }}</div>
                                 <div class="table-cell italic text-sm whitespace-nowrap bg-table-odd p-2">{{ __('shift.team_sizeShort') }}</div>
-                                <div class="table-cell italic text-sm whitespace-nowrap bg-table-odd w-1 p-2">{{ __('shift.action') }}</div>
+                                <div class="table-cell italic text-sm whitespace-nowrap bg-table-odd w-1 p-2">{{ __('general.actions') }}</div>
                             </div>
 
                             @foreach($shifts as $shift)
@@ -160,7 +160,7 @@
                                         <p class="text-xs md:text-sm">{{ $shift->description }}</p>
                                         @if($shift->hasContactInfo())
                                             <p class="lg:hidden mt-2 text-xs md:text-sm">
-                                                {{ __('plan.contactInfo') }}: {{ $shift->getContactInfo() }}
+                                                {{ __('shift.contactInfo') }}: {{ $shift->getContactInfo() }}
                                             </p>
                                         @endif
                                     </div>
@@ -188,15 +188,15 @@
                                     <div class="align-top md:table-cell">
                                         <div class="flex flex-row md:flex-col justify-start text-right gap-2 mt-2 md:m-2">
 
-                                            <a class="icon-button w-auto" href="{{route('plan.shift.edit',  ['plan' => $plan, 'shift' => $shift])}}">
-                                                <span>Bearbeiten</span>
+                                            <a class="icon-button w-auto" href="{{route('plan.shift.edit',  ['plan' => $plan, 'shift' => $shift])}}" title="{{ __('general.buttonEdit') }}">
+                                                <span>{{ __('general.buttonEdit') }}</span>
                                                 @include('partials.svg.pencil')
                                             </a>
                                             <form method="post" action="{{route('plan.shift.destroy', ['plan' => $plan, 'shift' => $shift])}}" class="delete-with-confirm" data-confirm-delete-msg="{{ __('shift.confirmDelete') }}">
                                                 @method('delete')
                                                 @csrf
-                                                <button type="submit" class="icon-button w-auto">
-                                                    <span>Löschen</span>
+                                                <button type="submit" class="icon-button w-auto" title="{{ __('general.buttonDelete') }}">
+                                                    <span>{{ __('general.buttonDelete') }}</span>
                                                     @include('partials.svg.delete')
                                                 </button>
                                             </form>

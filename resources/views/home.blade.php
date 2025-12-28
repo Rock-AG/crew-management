@@ -18,7 +18,7 @@
         <p class="italic md:text-lg m-8">{!! __('home.noPlans') !!}</p>
     @endif
     @foreach ($plans as $plan)
-        <a href="{{ route('plan.show', ['plan' => $plan]) }}" class="icon-button icon-arrow mx-auto my-2 w-full max-w-md md:max-w-xl xl:max-w-2xl md:p-4">
+        <a href="{{ route('plan.view.user', ['plan' => $plan]) }}" class="icon-button icon-arrow mx-auto my-2 w-full max-w-md md:max-w-xl xl:max-w-2xl md:p-4" title="{{ $plan->title }}">
             <span class="text-base md:text-xl">{{ $plan->title }}</span><br />
             <span class="text-xs md:text-base font-light italic">{{ $plan->getTimespan() }}</span>
             @if (str_contains($plan->title, "Burg"))<span class="burg"></span>@endif
