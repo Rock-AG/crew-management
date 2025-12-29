@@ -8,218 +8,137 @@ use App\Http\Controllers\SubscriptionController;
 use Illuminate\Support\Facades\Route;
 
 /** 
- * Static routes
+ * === Static routes ===
  **/
-Route::get(
-    '/',
+Route::get('/',
     [HomepageController::class, 'homepage'])
     ->name('homepage');
 
-Route::get(
-    '/impressum',
-    function() {
-        return view('imprint');
-    })
+Route::get('/impressum',
+    function() { return view('imprint'); })
     ->name('imprint');
 
 /**
- * Admin overview
+ *  === Unauthenticated User ===
+ *      View plan
  */
-Route::get(
-    '/admin',
-    [AdminController::class, 'admin']
-    )
-    ->name('admin');
-
-/**
- *  === Plan ===
- *      creation/editing routes
- */
-Route::get(
-    '/admin/plan',
-    [PlanController::class, 'create']
-    )
-    ->name('plan.create');
-
-Route::post(
-    '/admin/plan',
-    [PlanController::class, 'store']
-    )
-    ->name('plan.store');
-
-Route::get(
-    '/admin/plan/{plan:edit_id}/edit',
-    [PlanController::class, 'edit']
-    )
-    ->name('plan.edit');
-
-Route::put(
-    '/admin/plan/{plan:edit_id}/edit',
-    [PlanController::class, 'update']
-    )
-    ->name('plan.update');
-
-Route::get(
-    '/admin/plan/{plan:edit_id}',
-    [PlanController::class, 'admin']
-    )
-    ->name('plan.view.admin');
-
-Route::delete(
-    '/admin/plan/{plan:edit_id}/destroy',
-    [PlanController::class, 'destroy']
-    )
-    ->name('plan.destroy');
-
-Route::get(
-    '/plan/{plan:view_id}',
-    [PlanController::class, 'show']
-    )
+Route::get('/plan/{plan:view_id}',
+    [PlanController::class, 'show'])
     ->name('plan.view.user');
 
 /**
- *  === Subscription ===
- *      creation/editing routes
+ *  === Unauthenticated User ===
+ *      Subscribe to plan
  */
-Route::get(
-    '/admin/plan/{plan:edit_id}/subscriptions',
-    [PlanController::class, 'subscriptions']
-    )
-    ->name('plan.subscriptions');
-
-Route::get(
-    '/plan/{plan:view_id}/shift/{shift}/subscribe',
-    [SubscriptionController::class, 'create']
-    )
+Route::get('/plan/{plan:view_id}/shift/{shift}/subscribe',
+    [SubscriptionController::class, 'create'])
     ->name('subscription.create');
 
-Route::post(
-    '/plan/{plan:view_id}/shift/{shift}/subscribe',
-    [SubscriptionController::class, 'store']
-    )
+Route::post('/plan/{plan:view_id}/shift/{shift}/subscribe',
+    [SubscriptionController::class, 'store'])
     ->name('subscription.store');
 
-Route::get(
-    '/plan/{plan:view_id}/shift/{shift}/unsubscribe',
-    [SubscriptionController::class, 'remove']
-    )
+/**
+ *  === Unauthenticated User ===
+ *      Unsubscribe from plan
+ */
+Route::get('/plan/{plan:view_id}/shift/{shift}/unsubscribe',
+    [SubscriptionController::class, 'remove'])
     ->name('subscription.remove');
 
-Route::post(
-    '/plan/{plan:view_id}/shift/{shift}/unsubscribe',
-    [SubscriptionController::class, 'doRemove']
-    )
+Route::post('/plan/{plan:view_id}/shift/{shift}/unsubscribe',
+    [SubscriptionController::class, 'doRemove'])
     ->name('subscription.doRemove');
 
-Route::get(
-    '/plan/{plan:view_id}/shift/{shift}/unsubscribe/{unsubscribeConfirmationKey}',
-    [SubscriptionController::class, 'confirmRemove']
-    )
+Route::get('/plan/{plan:view_id}/shift/{shift}/unsubscribe/{unsubscribeConfirmationKey}',
+    [SubscriptionController::class, 'confirmRemove'])
     ->name('subscription.remove.confirm');
 
-Route::post(
-    '/plan/{plan:view_id}/shift/{shift}/unsubscribe/{unsubscribeConfirmationKey}',
-    [SubscriptionController::class, 'doConfirmRemove']
-    )
+Route::post('/plan/{plan:view_id}/shift/{shift}/unsubscribe/{unsubscribeConfirmationKey}',
+    [SubscriptionController::class, 'doConfirmRemove'])
     ->name('subscription.remove.doConfirm');
 
-Route::get(
-    '/plan/{plan:edit_id}/shift/{shift}/{subscription}/edit',
-    [SubscriptionController::class, 'edit']
-    )
-    ->name('subscription.edit');
-
-Route::put(
-    '/plan/{plan:edit_id}/shift/{shift}/{subscription}',
-    [SubscriptionController::class, 'update']
-    )
-    ->name('subscription.update');
-
-Route::delete(
-    '/plan/{plan:edit_id}/shift/{shift}/{subscription}',
-    [SubscriptionController::class, 'destroy']
-    )
-    ->name('subscription.destroy');
-
 /**
- *  === Shift ===
- *      creation/editing routes
+ * === Authenticated User (Admin) ===
+ *     All routes in "/admin"
  */
-Route::get(
-    '/admin/plan/{plan:edit_id}/shift',
-    [ShiftController::class, 'create']
-    )
-    ->name('plan.shift.create');
+Route::prefix('admin')->middleware('auth')->group(function() {
+    /*
+     * Admin overview
+     */ 
+    Route::get('/',
+        [AdminController::class, 'admin'])
+        ->name('admin');
+    
+    /*
+     * Plan management
+     *      Create/edit/delete
+     */ 
+    Route::get('/plan',
+        [PlanController::class, 'create'])
+        ->name('plan.create');
 
-Route::post(
-    '/admin/plan/{plan:edit_id}/shift',
-    [ShiftController::class, 'store']
-    )
-    ->name('plan.shift.store');
+    Route::post('/plan',
+        [PlanController::class, 'store'])
+        ->name('plan.store');
 
-Route::get(
-    '/admin/plan/{plan:edit_id}/shift/{shift}/edit',
-    [ShiftController::class, 'edit']
-    )
-    ->name('plan.shift.edit');
+    Route::get('/plan/{plan:edit_id}/edit',
+        [PlanController::class, 'edit'])
+        ->name('plan.edit');
 
-Route::put(
-    '/admin/plan/{plan:edit_id}/shift/{shift}/edit',
-    [ShiftController::class, 'update']
-    )
-    ->name('plan.shift.update');
+    Route::put('/plan/{plan:edit_id}/edit',
+        [PlanController::class, 'update'])
+        ->name('plan.update');
 
-Route::delete(
-    '/admin/plan/{plan:edit_id}/shift/{shift}/delete',
-    [ShiftController::class, 'destroy']
-    )
-    ->name('plan.shift.destroy');
+    Route::get('/plan/{plan:edit_id}',
+        [PlanController::class, 'admin'])
+        ->name('plan.view.admin');
 
-/**
- * Public routes
- */
+    Route::delete('/plan/{plan:edit_id}/destroy',
+        [PlanController::class, 'destroy'])
+        ->name('plan.destroy');
+    
+    /*
+     * Shift management
+     *      Create/edit/delete
+     */
+    Route::get('/plan/{plan:edit_id}/shift',
+        [ShiftController::class, 'create'])
+        ->name('plan.shift.create');
 
+    Route::post('/plan/{plan:edit_id}/shift',
+        [ShiftController::class, 'store'])
+        ->name('plan.shift.store');
 
-Route::get('/info', function () {
-    Log::info('Phpinfo page visited');
-    return phpinfo();
-});
+    Route::get('/plan/{plan:edit_id}/shift/{shift}/edit',
+        [ShiftController::class, 'edit'])
+        ->name('plan.shift.edit');
 
-Route::get('/health', function () {
-    $status = [];
+    Route::put('/plan/{plan:edit_id}/shift/{shift}/edit',
+        [ShiftController::class, 'update'])
+        ->name('plan.shift.update');
 
-    // Check Database Connection
-    try {
-        DB::connection()->getPdo();
-        // Optionally, run a simple query
-        DB::select('SELECT 1');
-        $status['database'] = 'OK';
-    } catch (\Exception $e) {
-        $status['database'] = 'Error';
-    }
+    Route::delete('/plan/{plan:edit_id}/shift/{shift}/delete',
+        [ShiftController::class, 'destroy'])
+        ->name('plan.shift.destroy');
 
-    // Check Storage Access
-    try {
-        $testFile = 'health_check.txt';
-        Storage::put($testFile, 'OK');
-        $content = Storage::get($testFile);
-        Storage::delete($testFile);
+    /*
+     * Subscription management
+     *      Edit/delete
+     */ 
+    Route::get('/plan/{plan:edit_id}/subscriptions',
+        [PlanController::class, 'subscriptions'])
+        ->name('plan.subscriptions');
 
-        if ($content === 'OK') {
-            $status['storage'] = 'OK';
-        } else {
-            $status['storage'] = 'Error';
-        }
-    } catch (\Exception $e) {
-        $status['storage'] = 'Error';
-    }
+    Route::get('/plan/{plan:edit_id}/shift/{shift}/{subscription}/edit',
+        [SubscriptionController::class, 'edit'])
+        ->name('subscription.edit');
 
-    // Determine overall health status
-    $isHealthy = collect($status)->every(function ($value) {
-        return $value === 'OK';
-    });
+    Route::put('/plan/{plan:edit_id}/shift/{shift}/{subscription}',
+        [SubscriptionController::class, 'update'])
+        ->name('subscription.update');
 
-    $httpStatus = $isHealthy ? 200 : 503;
-
-    return response()->json($status, $httpStatus);
+    Route::delete('/plan/{plan:edit_id}/shift/{shift}/{subscription}',
+        [SubscriptionController::class, 'destroy'])
+        ->name('subscription.destroy');
 });
