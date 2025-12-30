@@ -14,6 +14,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libcurl4-openssl-dev \
     libicu-dev \
     libzip-dev \
+    locales \
+    && locale-gen de_DE.UTF-8 \
     && docker-php-ext-install -j$(nproc) \
     pdo_mysql \
     pdo_pgsql \
