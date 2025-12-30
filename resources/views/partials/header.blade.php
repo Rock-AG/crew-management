@@ -1,9 +1,20 @@
-<header class="sticky top-0 z-10 mb-4 text-ci-white flex flex-row w-full page-header-box-shadow">
-    <a href="/" class="p-2 bg-ci-gray-dark flex flex-col justify-center" title="{{ __('navigation.home') }}">
-        <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="28" height="28" viewBox="0 0 24 24" fill="#fff">
-            <path d="M 12 2.0996094 L 1 12 L 4 12 L 4 21 L 10 21 L 10 15 L 14 15 L 14 21 L 20 21 L 20 12 L 23 12 L 12 2.0996094 z"></path>
-        </svg>
+<header class="sticky top-0 z-10 mb-4 bg-ci-gray-dark text-ci-white flex flex-row w-full page-header-box-shadow">
+    <a href="{{ route('homepage') }}" class="min-w-[28px] m-2 flex flex-col justify-center" title="{{ __('navigation.home') }}">
+        @include('partials.svg.home')
     </a>
+    @auth
+        <a href="{{ route('user.change-password') }}" class="min-w-[28px] m-2 flex flex-col justify-center" title="{{ __('auth.userPreferences') }}">
+            @include('partials.svg.user')
+        </a>
+        <form action="{{ route('logout') }}" method="post" class="flex">
+            @csrf
+            <button type="submit" class="min-w-[28px] m-2 flex flex-col justify-center cursor-pointer" title="{{ __('auth.logout') }}">
+                @include('partials.svg.logout')
+            </button>
+        </form>
+    @else
+
+    @endauth
     <div class="bg-ci-gray-dark text-ci-white w-full p-2 text-right flex flex-col justify-center">
         <span class="[font-variant:small-caps] font-semibold text-lg">{{ $pageTitle }}</span>
     </div>

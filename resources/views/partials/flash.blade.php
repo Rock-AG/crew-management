@@ -11,3 +11,10 @@
         <div class="font-bold">{{Session::get('info')}}</div>
     </div>
 @endif
+
+@if(Session::has('status'))
+    <div class="border-1 bg-blue-300 rounded md:text-lg mb-4 p-4 flex gap-2 justify-start items-center">
+        <div class="w-6 md:w-8 inline-block min-w-[24px]">@include('partials.svg.info')</div>
+        <div class="font-bold">{{Session::get('status')}}</div>
+    </div>
+@endif

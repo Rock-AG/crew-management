@@ -2,7 +2,11 @@
     <div class="max-w-7xl mx-auto flex flex-col md:flex-row">
         <div class="w-full p-4 text-center md:text-left flex flex-1 flex-col md:flex-row">
             <span class="md:mr-4"><a href="{{ route('imprint') }}" class="textlink" title="{{ __('navigation.imprint') }}">{{ __('navigation.imprint') }}</a></span>
-            <span class="md:ml-4"><a href="{{ route('admin') }}" class="textlink" title="{{ __('navigation.admin') }}">{{ __('navigation.admin') }}</a></span>
+            @auth
+                <span class="md:ml-4"><a href="{{ route('admin') }}" class="textlink" title="{{ __('navigation.admin') }}">{{ __('navigation.admin') }}</a></span>
+            @else
+                <span class="md:ml-4"><a href="{{ route('login') }}" class="textlink" title="{{ __('navigation.login') }}">{{ __('navigation.login') }}</a></span>
+            @endauth
         </div>
         <div class="w-full p-4 text-center border-t-1 border-ci-gray-light md:border-0 flex flex-col flex-2 md:flex-row md:justify-end">
             <span class="italic md:mr-4">{{ __('navigation.copyleft') }}</span>

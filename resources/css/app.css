@@ -165,7 +165,7 @@
     @apply font-tower-ruins text-2xl md:text-3xl lg:text-4xl;
   }
 
-  input[type=text], input[type=number], textarea {
+  input[type=text], input[type=number], input[type=password], textarea {
     @apply text-sm md:text-base text-ci-white outline-0 border-1 border-ci-gray-light bg-ci-gray-dark rounded py-1 md:py-2 px-2;
 
     &[readonly] {

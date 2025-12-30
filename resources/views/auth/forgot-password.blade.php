@@ -1,6 +1,6 @@
 @extends('layout.app', [
     'includeHeader' => true,
-    'pageTitle' => __('auth.pageTitle.login'),
+    'pageTitle' => __('auth.pageTitle.forgot-password'),
 ])
 
 @section('body')
@@ -10,10 +10,11 @@
 
         <section class="max-w-md mx-auto text-center">
             <header>
-                <h1 class="section-header mb-2">{{ __('auth.headline.login') }}</h1>
+                <h1 class="section-header mb-2">{{ __('auth.headline.forgot-password') }}</h1>
+                <p class="mb-2 text-sm md:text-base">{{ __('auth.intro.forgot-password') }}</p>
             </header>
 
-            <form action="{{ route('login.store') }}" method="POST">
+            <form action="{{ route('password.email') }}" method="POST">
                 @csrf
 
                 <div class="">
@@ -25,21 +26,13 @@
                         @enderror
                     </div>
 
-                    <div class="mb-2 text-left">
-                        <label for="password" class="block mb-1 text-sm md:text-base">{{__("auth.password")}}</label>
-                        <input id="password" name="password" placeholder="{{__('auth.password')}}" type="password" class="@error('password') error @enderror w-full" value="">
-                        @error('password')
-                            <div class="text-red-700 text-xs italic mt-2 pl-2">{{ $message }}</div>
-                        @enderror
-                    </div>
-
                     <div class="flex items-baseline justify-between">
                         <button type="submit" class="icon-button mt-4">
-                            <span>{{__('auth.buttonLogin')}}</span>
-                            @include('partials.svg.login')
+                            <span>{{__('auth.buttonRequestResetLink')}}</span>
+                            @include('partials.svg.send')
                         </button>
 
-                        <a class="textlink" href="{{ route('password.request') }}">{{__('auth.linkForgotPassword')}}</a>
+                        <a class="textlink" href="{{ route('login') }}">{{__('auth.linkLogin')}}</a>
                     </div>
                     
                 </div>

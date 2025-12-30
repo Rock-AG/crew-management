@@ -142,3 +142,14 @@ Route::prefix('admin')->middleware('auth')->group(function() {
         [SubscriptionController::class, 'destroy'])
         ->name('subscription.destroy');
 });
+
+/**
+ * === Authenticated User (Admin) ===
+ *     Change password
+ */
+Route::get('/user/change-password',
+    function() { 
+        return view('auth.change-password');
+    })
+    ->middleware('auth')
+    ->name('user.change-password');

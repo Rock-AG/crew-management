@@ -5,6 +5,10 @@ return [
     "max" => [
         "string" => "Eingabe ist zu lang",
     ],
+    "min" => [
+        "string" => "Eingabe ist zu kurz",
+    ],
     "email" => "Bitte eine gültige Email-Adresse eingeben",
     "phone" => "Bitte eine gültige Telefonnummer eingeben",
+    "confirmed" => "Werte stimmen nicht überein",
 ];
