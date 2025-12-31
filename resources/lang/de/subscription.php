@@ -37,7 +37,7 @@ return [
     "subscribeConfirmationContactInfo_withName" => "Falls du Fragen hast, wende dich gerne an dein*e Ansprechpartner*in: :contact_info.",
     "subscribeConfirmationContactInfo_withoutName" => "Falls du Fragen hast, wende dich gerne an uns: :contact_info",
     
-    "unsubscribeConfirmation" => "Bestätige Absage",
+    "unsubscribeConfirmation" => "Absage bestätigen",
     "confirmUnsubscribe" => "Um die Absage deiner Schicht zu bestätigen, öffne bitte den folgenden Link und bestätige dort die Absage:",
     "confirmUnsubscribeShiftInfo" => "Informationen zur Schicht:",
     "confirmUnsubscribeEnd" => "Falls du nicht versucht hast, dich von dieser Schicht abzumelden, kannst du diese E-Mail ignorieren.",

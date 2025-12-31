@@ -13,7 +13,7 @@
         </div>
 
         <div class="mb-6 md:mb-12">
-            <p class="text-sm md:text-base md:text-center font-bold mb-2">{{ __('subscription.remove.shiftInfoIntro') }}</p>
+            <p class="text-sm md:text-base md:text-center font-bold mb-6 md:mb-12">{{ __('subscription.remove.shiftInfoIntro') }}</p>
             <p class="md:text-lg md:text-center font-bold">{{ $shift->title }}</p>
             <p class="text-sm md:text-base italic md:text-center">({{ $plan->title }})</p>
             <p class="text-sm md:text-lg md:text-center">{!! \App\Http\Controllers\PlanController::buildDateString($shift->start, $shift->end, true) !!}</p>
