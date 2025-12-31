@@ -52,7 +52,7 @@
                 <div class="md:flex md:gap-2">
                     <div class="mb-2 md:mb-0 md:flex-1">
                         <label for="start" class="block mb-1 text-sm md:text-base">{{__("shift.startDesc")}}</label>
-                        <input id="start" name="start" placeholder="{{__('shift.startDesc')}}" type="text" class="datepicker @error('start') error @enderror w-full" value="{{ old('start', $shift->start) }}">
+                        <input id="start" name="start" placeholder="{{__('shift.startDesc')}}" type="text" class="datetimepicker @error('start') error @enderror w-full" value="{{ old('start', $shift->start) }}">
                         @error('start')
                             <div class="text-red-700 text-xs italic mt-2 pl-2">{{ $message }}</div>
                         @enderror
@@ -60,7 +60,7 @@
 
                     <div class="mb-2 md:mb-0 md:flex-1">
                         <label for="end" class="block mb-1 text-sm md:text-base">{{__("shift.endDesc")}}</label>
-                        <input id="end" name="end" placeholder="{{__('shift.endDesc')}}" type="text" class="datepicker @error('end') error @enderror w-full" value="{{ old('end', $shift->end) }}">
+                        <input id="end" name="end" placeholder="{{__('shift.endDesc')}}" type="text" class="datetimepicker @error('end') error @enderror w-full" value="{{ old('end', $shift->end) }}">
                         @error('end')
                             <div class="text-red-700 text-xs italic mt-2 pl-2">{{ $message }}</div>
                         @enderror

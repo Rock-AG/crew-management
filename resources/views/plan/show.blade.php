@@ -67,7 +67,7 @@
                                             @endif
 
                                             {{-- Unsubscribe --}}
-                                            @if ($plan->allow_unsubscribe && strtotime($shift->start) > strtotime('+2 day') && $shift->subscriptions->count() > 0)
+                                            @if ($plan->allow_unsubscribe && $shift->subscriptions->count() > 0)
                                                 <a class="icon-button w-auto" href="{{route('subscription.remove', ['plan' => $shift->plan->view_id, 'shift'=> $shift])}}" title="{{ __('shift.buttonSubscribe') }}">
                                                     <span>{{ __('shift.buttonUnsubscribe') }}</span>
                                                     @include('partials.svg.frown')

@@ -20,7 +20,7 @@
     @foreach ($plans as $plan)
         <a href="{{ route('plan.view.user', ['plan' => $plan]) }}" class="icon-button icon-arrow mx-auto my-2 w-full max-w-md md:max-w-xl xl:max-w-2xl md:p-4" title="{{ $plan->title }}">
             <span class="text-base md:text-xl">{{ $plan->title }}</span><br />
-            <span class="text-xs md:text-base font-light italic">{{ $plan->getTimespan() }}</span>
+            <span class="text-xs md:text-base font-light italic">{{ $plan->event_date->translatedFormat('l, d. F Y') }}</span>
             @if (str_contains($plan->title, "Burg"))<span class="burg"></span>@endif
         </a>
     @endforeach

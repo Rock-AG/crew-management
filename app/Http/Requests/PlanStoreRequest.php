@@ -15,6 +15,7 @@ class PlanStoreRequest extends FormRequest
     {
         return [
             'title' => 'required|max:200',
+            'event_date' => 'required|date',
             'description' => 'required|max:500',
             'contact' => 'max:500',
             'allow_unsubscribe' => 'boolean',

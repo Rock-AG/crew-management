@@ -29,7 +29,7 @@
                 @method("put")
             @endif
 
-            <div class="md:grid md:grid-cols-2 md:grid-rows-2 md:gap-2 md:mb-2">
+            <div class="md:grid md:grid-cols-2 md:grid-rows-3 md:gap-2 md:mb-2">
                 <div class="mb-2 md:mb-0">
                     <label for="title" class="block mb-1 text-sm md:text-base">{{__("plan.title")}}</label>
                     <input id="title" name="title" placeholder="{{__('plan.title')}}" type="text" class="@error('title') error @enderror w-full" value="{{ old('title', $plan->title) }}">
@@ -45,6 +45,14 @@
                         <div class="text-red-700 text-xs italic mt-2 pl-2">{{ $message }}</div>
                     @enderror
                 </div>
+
+                <div class="mb-2 md:mb-0">
+                    <label for="event_date" class="block mb-1 text-sm md:text-base">{{__("plan.event_date")}}</label>
+                    <input id="event_date" name="event_date" placeholder="{{__('plan.event_date')}}" type="text" class="datepicker @error('event_date') error @enderror w-full" value="{{ old('event_date', $plan->event_date) }}">
+                    @error('event_date')
+                        <div class="text-red-700 text-xs italic mt-2 pl-2">{{ $message }}</div>
+                    @enderror
+                </div>                
 
                 <div class="mb-2 md:mb-0">
                     <label for="contact" class="block mb-1 text-sm md:text-base">{{__("plan.contactDesc")}}</label>

@@ -130,6 +130,19 @@
       width: 15%;
       aspect-ratio: 682 / 362;
     }
+
+    &.changeling {
+      /* Apply styles from .icon-button.big-button an .icon-button.no-text */
+      @variant md {
+        @apply px-6 py-4;
+        padding-right: calc(((var(--spacing) * 6) * 2) + var(--size-button-icon));
+        height: 88px;
+        padding-left: calc(var(--spacing) * 4);
+        & > span {
+          display: none;
+        }
+      }
+    }
   }
 
   .header-bg-image {

@@ -28,11 +28,13 @@
             {{-- Table header (only md and up) --}}
             <div class="hidden md:table-header-group text-left">
                 <div class="table-cell italic text-sm whitespace-nowrap p-1 px-2 bg-table-odd">{{ __('admin.tableHeader.title') }}</div>
-                <div class="table-cell italic text-sm whitespace-nowrap p-1 px-2 bg-table-odd">{{ __('admin.tableHeader.timespan') }}</div>
+                <div class="hidden lg:table-cell italic text-sm whitespace-nowrap p-1 px-2 bg-table-odd">{{ __('admin.tableHeader.event_date') }}</div>
+                <div class="hidden lg:table-cell italic text-sm whitespace-nowrap p-1 px-2 bg-table-odd">{{ __('admin.tableHeader.timespan') }}</div>
                 <div class="table-cell italic text-sm whitespace-nowrap p-1 px-2 bg-table-odd">{{ __('admin.tableHeader.shiftsAmount') }}</div>
                 <div class="table-cell italic text-sm whitespace-nowrap p-1 px-2 bg-table-odd">{{ __('admin.tableHeader.teamSize') }}</div>
                 <div class="table-cell italic text-sm whitespace-nowrap p-1 px-2 bg-table-odd">{{ __('admin.tableHeader.links') }}</div>
-                <div class="table-cell italic text-sm whitespace-nowrap p-1 px-2 bg-table-odd">{{ __('admin.tableHeader.delete') }}</div>
+                <div class="table-cell italic text-sm whitespace-nowrap p-1 px-2 bg-table-odd w-1">{{ __('admin.tableHeader.duplicate') }}</div>
+                <div class="table-cell italic text-sm whitespace-nowrap p-1 px-2 bg-table-odd w-1">{{ __('admin.tableHeader.delete') }}</div>
             </div>
 
             @foreach($plans as $plan)
@@ -41,7 +43,13 @@
                         <span class="font-bold">{{ $plan->title }}</span>
                     </div>
 
-                    <div class="align-top md:table-cell text-xs lg:text-base mb-2 md:mb-0 md:p-2 whitespace-nowrap">
+                    <div class="align-top md:hidden lg:table-cell text-xs lg:text-base mb-2 md:mb-0 md:p-2 whitespace-nowrap">
+                        <span class="md:hidden">{{ __('admin.tableHeader.event_date') }}: </span>
+                        <span>{{ $plan->event_date->translatedFormat('l, d. F Y') }}</span>
+                    </div>
+
+                    <div class="align-top md:hidden lg:table-cell text-xs lg:text-base mb-2 md:mb-0 md:p-2 whitespace-nowrap">
+                        <span class="md:hidden">{{ __('admin.tableHeader.timespan') }}: </span>
                         <span>{{ $plan->getTimespan() }}</span>
                     </div>
 
@@ -61,7 +69,7 @@
                                 <span>{{ __('admin.linkPublic') }}</span>
                                 @include('partials.svg.share')
                             </a>
-                            <a class="icon-button w-auto" href="{{route('plan.view.admin', ['plan' => $plan])}}" target="_blank" title="{{ __('admin.linkAdmin') }}">
+                            <a class="icon-button w-auto" href="{{route('plan.view.admin', ['plan' => $plan])}}" title="{{ __('admin.linkAdmin') }}">
                                 <span>{{ __('admin.linkAdmin') }}</span>
                                 @include('partials.svg.pencil')
                             </a>
@@ -70,15 +78,23 @@
                     </div>
 
                     <div class="align-top md:table-cell text-sm lg:text-base mb-2 md:mb-0 md:p-2 whitespace-nowrap">
+                        <a class="icon-button changeling w-full md:w-auto" title="{{ __('admin.buttonDuplicatePlan') }}" href="{{route('plan.duplicate',  ['plan' => $plan])}}">
+                            <span>{{ __('admin.buttonDuplicatePlan') }}</span>
+                            @include('partials.svg.copy')
+                        </a>
+                    </div>
+
+                    <div class="align-top md:table-cell text-sm lg:text-base mb-2 md:mb-0 md:p-2 whitespace-nowrap">
                         <form method="post" action="{{route('plan.destroy', ['plan' => $plan])}}" class="delete-with-confirm" data-confirm-delete-msg="{{ __('plan.confirmDelete') }}">
                             @method('delete')
                             @csrf
-                            <button type="submit" title="{{ __('admin.buttonDeletePlan') }}" class="icon-button big-button red-button no-text w-auto whitespace-nowrap py-1">
+                            <button type="submit" title="{{ __('admin.buttonDeletePlan') }}" class="icon-button changeling red-button w-full md:w-auto whitespace-nowrap py-1">
                                 <span>{{ __('admin.buttonDeletePlan') }}</span>
                                 @include('partials.svg.delete')
                             </button type="submit">
                         </form>
                     </div>
+                    
                 </div>
             @endforeach
         </div>

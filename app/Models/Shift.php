@@ -24,6 +24,14 @@ class Shift extends Model
         'contact_phone',
     ];
 
+    protected function casts(): array
+    {
+        return [
+            'start' => 'datetime',
+            'end' => 'datetime',
+        ];
+    }
+
     /**
      * @inheritDoc
      * @param array $options
@@ -77,16 +85,13 @@ class Shift extends Model
 
     public function getTimespan(): string
     {
-        $start = \Illuminate\Support\Facades\Date::parse($this->start);
-        $end = \Illuminate\Support\Facades\Date::parse($this->end);
-
         // Same day
-        if ($start->isSameDay($end)) {
-            return $start->isoFormat("dd. DD.MM.YYYY HH:mm") . ' - ' . $end->isoFormat("HH:mm");
+        if ($this->start->isSameDay($this->end)) {
+            return $this->start->translatedFormat("l, d. F Y H:i") . ' - ' . $this->end->translatedFormat("H:i");
         }
         // Different day
         else {
-            return $start->isoFormat("dd.. DD.MM.YYYY HH:mm") . ' - ' . $end->isoFormat("dd. DD.MM.YYYY HH:mm");
+            return $this->start->translatedFormat("l, d. F Y H:i") . ' - ' . $this->end->translatedFormat("l, d. F Y H:i");
         }
     }
 

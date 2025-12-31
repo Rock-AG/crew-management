@@ -45,6 +45,10 @@
                         <div class="md:table-cell md:p-2">{{ $plan->title }}</div>
                     </div>
                     <div class="md:table-row odd:bg-table-odd even:bg-table-even p-2">
+                        <div class="md:table-cell md:min-w-[30%] text-xs md:text-base align-top font-bold md:p-2">{{ __('plan.event_date') }}</div>
+                        <div class="md:table-cell md:p-2">{{ $plan->event_date->translatedFormat('d. F Y') }}</div>
+                    </div>
+                    <div class="md:table-row odd:bg-table-odd even:bg-table-even p-2">
                         <div class="md:table-cell md:min-w-[30%] text-xs md:text-base align-top font-bold md:p-2">{{ __('plan.planDesc') }}</div>
                         <div class="md:table-cell md:p-2">{{ $plan->description }}</div>
                     </div>

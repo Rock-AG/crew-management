@@ -72,7 +72,7 @@ Route::prefix('admin')->middleware('auth')->group(function() {
     
     /*
      * Plan management
-     *      Create/edit/delete
+     *      Create/edit/delete/duplicate
      */ 
     Route::get('/plan',
         [PlanController::class, 'create'])
@@ -97,6 +97,14 @@ Route::prefix('admin')->middleware('auth')->group(function() {
     Route::delete('/plan/{plan:edit_id}/destroy',
         [PlanController::class, 'destroy'])
         ->name('plan.destroy');
+    
+    Route::get('/plan/{plan:edit_id}/duplicate',
+        [PlanController::class, 'duplicate'])
+        ->name('plan.duplicate');
+
+    Route::put('/plan/{plan:edit_id}/duplicate',
+        [PlanController::class, 'duplicateStore'])
+        ->name('plan.duplicate.store');
     
     /*
      * Shift management

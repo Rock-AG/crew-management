@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\PlanDuplicateRequest;
 use App\Http\Requests\PlanStoreRequest;
 use App\Http\Requests\UpdatePlanRequest;
 use App\Models\Plan;
@@ -32,6 +33,57 @@ class PlanController extends Controller
     public function edit(Plan $plan): View
     {
         return view('plan.create', ['plan' => $plan]);
+    }
+
+    /**
+     * Show the form for editing the plan
+     *
+     * @param  \App\Models\Plan  $plan
+     * @return \Illuminate\Http\Response
+     */
+    public function duplicate(Plan $plan): View
+    {
+        return view('plan.duplicate', ['plan' => $plan]);
+    }
+
+    /**
+     * Create and store a copy of the plan with the new data
+     * 
+     * Values for allow_unsubscribe, allow_subscribe, show_on_homepage
+     * will be set to false
+     *
+     * @param  \App\Http\Plan $plan
+     * @param  \App\Http\Requests\PlanStoreRequest  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function duplicateStore(Plan $plan, PlanDuplicateRequest $request)
+    {
+        $data = $request->validated();
+        
+        // Base entity
+        $newPlan = Plan::create($data);
+
+        // Shifts with newly calculated dates
+        $dateDiff = $plan->event_date->diff($newPlan->event_date);
+
+        foreach ($plan->shifts as $shift) {
+            $newPlan->shifts()->create(
+                [
+                    'title' => $shift->title,
+                    'description' => $shift->description,
+                    'start' => $shift->start->copy()->add($dateDiff),
+                    'end' => $shift->end->copy()->add($dateDiff),
+                    'team_size' => $shift->team_size,
+                    'category' => $shift->category,
+                    'contact_name' => $shift->contact_name,
+                    'contact_email' => $shift->contact_email,
+                    'contact_phone' => $shift->contact_phone,
+                ]
+            );
+        }
+
+        Session::flash('info', __('plan.successfullyDuplicated'));
+        return redirect()->route('plan.view.admin', ['plan' => $newPlan]);
     }
 
     /**
@@ -143,26 +195,23 @@ class PlanController extends Controller
      *      Mo. 10.1 10:00 - 12:00
      *      Mo. 10.1 10:00 - Di.11.1 12:00
      */
-    public static function buildDateString(string $start, string $end, bool $inline = false): string  {
-        $start = \Illuminate\Support\Facades\Date::parse($start);
-        $end = \Illuminate\Support\Facades\Date::parse($end);
-        $hours = $start->diffInHours($end);
+    public static function buildDateString($start, $end, bool $inline = false): string  {
         $res = "";
         if($start->isSameDay($end)) {
-            $res .= $start->isoFormat("dd. OD. MMMM YYYY | HH:mm");
+            $res .= $start->translatedFormat("l, d. F Y | H:i");
             $res .= " - ";
-            $res .= $end->isoFormat('HH:mm');
+            $res .= $end->translatedFormat('H:i');
         } elseif($start->isSameYear($end)) {
-            $res .= $start->isoFormat("dd. OD. MMMM YYYY | HH:mm");
+            $res .= $start->translatedFormat("l, d. F Y | H:i");
             $res .= "&nbsp; -";
             $res .= $inline ? "&nbsp;" : "<br>";
-            $res .= $end->isoFormat("dd. OD. MMMM YYYY | HH:mm");
+            $res .= $end->translatedFormat("l, d. F Y | H:i");
         } else {
-            $res .= $start->isoFormat("dd. OD. MMMM YYYY HH:mm");
+            $res .= $start->translatedFormat("l, d. F Y H:i");
             $res .= $inline ? "&nbsp;" : "<br>";
             $res .= " - ";
             $res .= $inline ? "&nbsp;" : "<br>";
-            $res .= $end->isoFormat("dd. OD. MMMM YYYY | HH:mm");
+            $res .= $end->translatedFormat("l, d. F Y | H:i");
         }
         return $res;
     }

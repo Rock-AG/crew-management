@@ -6,7 +6,8 @@ import Accordion from "accordion-js";
 /**
  * Localize flatpickr
  */
-const German = require("flatpickr/dist/l10n/de.js");
+// const German = require("flatpickr/dist/l10n/de.js");
+import { German } from "flatpickr/dist/l10n/de.js";
 
 /**
  * Add flatpickr for events
@@ -14,13 +15,20 @@ const German = require("flatpickr/dist/l10n/de.js");
 function addEvents() {
     const e = new Date();
     e.setHours(0);
-    flatpickr(".datepicker", {
+    flatpickr(".datetimepicker", {
         minDate: e,
         enableTime: true,
         time_24hr: true,
-        locale: 'de',
+        locale: German,
         altInput: true,
         altFormat: 'd. F Y, H:i',
+    });
+
+    flatpickr(".datepicker", {
+        enableTime: false,
+        locale: German,
+        altInput: true,
+        altFormat: 'd. F Y',
     });
 
     const el = document.getElementById('start');

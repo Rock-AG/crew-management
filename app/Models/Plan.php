@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Str;
 
 class Plan extends Model
@@ -21,6 +22,7 @@ class Plan extends Model
         'allow_unsubscribe',
         'allow_subscribe',
         'show_on_homepage',
+        'event_date',
     ];
 
     /**
@@ -33,6 +35,13 @@ class Plan extends Model
         'edit_id',
         'view_id'
     ];
+
+    protected function casts(): array
+    {
+        return [
+            'event_date' => 'datetime:Y-m-d',
+        ];
+    }
 
     /**
      * @inheritDoc
@@ -119,24 +128,24 @@ class Plan extends Model
 
         $lastShift = $this->hasMany(Shift::class)->orderBy('end', 'desc')->first();
         
-        $start = \Illuminate\Support\Facades\Date::parse($firstShift->start);
-        $end = \Illuminate\Support\Facades\Date::parse($lastShift->end);
+        $start = $firstShift->start;
+        $end = $lastShift->end;
 
         // Same day
         if ($start->isSameDay($end)) {
-            return $start->isoFormat("dd. OD. MMMM YYYY");
+            return $start->translatedFormat("d. F Y");
         }
         // Same month
         elseif ($start->isSameMonth($end)) {
-            return $start->isoFormat("dd. OD.") . ' - ' . $end->isoFormat("dd. OD. MMMM YYYY");
+            return $start->translatedFormat("d.") . ' - ' . $end->translatedFormat("d. F Y");
         }
         // Same year
         elseif ($start->isSameYear($end)) {
-            return $start->isoFormat("dd. OD. MMMM") . ' - ' . $end->isoFormat("dd. OD. MMMM YYYY");
+            return $start->translatedFormat("d. F") . ' - ' . $end->translatedFormat("d. F Y");
         }
         // Different year
         else {
-            return $start->isoFormat("dd. OD. MMMM YYYY") . ' - ' . $end->isoFormat("dd. OD. MMMM YYYY");
+            return $start->translatedFormat("d. F Y") . ' - ' . $end->translatedFormat("d. F Y");
         }
     }
 

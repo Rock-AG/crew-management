@@ -5,13 +5,19 @@ return [
         "create" => "Neuen Schichtplan erstellen",
         "editSuffix" => " (Grundeinstellungen)",
         "adminSuffix" => " (Admin)",
+        "duplicate" => "Schichtplan duplizieren",
     ],
     "headline" => [
         "create" => "Neuen Schichtplan erstellen",
         "edit" => "Schichtplan bearbeiten",
+        "duplicate" => "Schichtplan duplizieren",
+    ],
+    "intro" => [
+        "duplicate" => "Hier kannst du den Plan \":planTitle\" und alle seine Schichten duplizieren. Die Start- und Endzeiten der Schichten werden relativ zu dem eingegebenen Datum berechnet.",
     ],
 
     "title" => "Titel",
+    "event_date" => "Event-Datum",
     "planDesc" => "Beschreibung",
     "contactDesc" => "Kontakt-Info",
     "showOnHomepage" => "Link zum Schichtplan auf der Startseite anzeigen",
@@ -21,6 +27,7 @@ return [
     "successfullyDestroyed" => "Schichtplan wurde gelöscht",
     "successfullyUpdated" => "Grundeinstellungen aktualisiert",
     "successfullyCreated" => "Schichtplan wurde erstellt",
+    "successfullyDuplicated" => "Schichtplan wurde kopiert",
 
     "planAdminTitle" => "Schichtplan konfigurieren",
     "planAdminIntro" => "Auf dieser Seite kannst du den Schichtplan konfigurieren. Hier können auch die verfügbaren Schichten angelegt und bearbeitet werden, in die sich Helfer*innen später eintragen können.",
