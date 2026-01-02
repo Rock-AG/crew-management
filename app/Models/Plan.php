@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Str;
 
@@ -70,6 +71,18 @@ class Plan extends Model
         return $this->hasMany(Shift::class)
             ->orderByRaw('CASE WHEN category = \'\' THEN 1 ELSE 0 END, category')
             ->orderBy('start');
+    }
+
+    /**
+     * Get the shifts grouped by the category name
+     * 
+     * @return \Illuminate\Support\Collection
+     */
+    public function shiftsGroupedByCategory(): Collection
+    {
+        return $this->shifts->groupBy(function(Shift $item) {
+            return $item->category !== '' ? $item->category : __('shift.noCategory');
+        });
     }
 
     /**

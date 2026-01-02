@@ -136,15 +136,7 @@ class PlanController extends Controller
      */
     public function admin(Plan $plan)
     {
-        $shiftsGroupedByCategory = $plan->shifts->groupBy(function(Shift $item) {
-            return $item->category !== '' ? $item->category : __('shift.noCategory');
-        });
-
-        return view('plan.admin')
-            ->with([
-                'plan' => $plan,
-                'shiftsGroupedByCategory' => $shiftsGroupedByCategory
-            ]);
+        return view('plan.admin', ['plan' => $plan]);
     }
 
     /**
@@ -183,11 +175,7 @@ class PlanController extends Controller
      */
     public function show(Plan $plan)
     {
-        $shiftsGroupedByCategory = $plan->shifts->groupBy(function(Shift $item) {
-            return $item->category !== '' ? $item->category : __('shift.noCategory');
-        });
-
-        return view('plan.show', ['plan' => $plan, 'shiftsGroupedByCategory' => $shiftsGroupedByCategory]);
+        return view('plan.show', ['plan' => $plan]);
     }
 
     /**

@@ -131,7 +131,7 @@
 
         {{-- Shifts grouped by type --}}
         <div class="accordion-container mb-4">
-            @foreach($shiftsGroupedByCategory as $category => $shifts)
+            @foreach($plan->shiftsGroupedByCategory() as $category => $shifts)
                 <div class="ac group mb-2 md:mb-4">
 
                     <h3 class="ac-header flex">
