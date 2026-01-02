@@ -88,8 +88,11 @@ function registerOpenImport() {
 document.addEventListener('DOMContentLoaded', registerOpenImport);
 
 function createAccordion() {
+    const options = {
+        showMultiple: true,
+    };
     const accordions = Array.from(document.querySelectorAll(".accordion-container"));
-    new Accordion(accordions);
+    new Accordion(accordions, options);
 }
 document.addEventListener('DOMContentLoaded', createAccordion);
 
