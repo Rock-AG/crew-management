@@ -20,6 +20,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        // Always generate https urls on production
+        URL::forceHttps($this->app->isProduction());
     }
 }

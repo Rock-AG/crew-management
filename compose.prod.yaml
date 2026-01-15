@@ -15,6 +15,7 @@ services:
       - laravel-public-assets:/var/www/public/build:ro
     networks:
       - rockag-crew-production
+      - caddy
     # ports:
     #   # Map port 80 inside the container to the port specified by 'NGINX_PORT' on the host machine.
     #   # -----------------------------------------------------------
@@ -83,6 +84,8 @@ services:
       retries: 5
 
 networks:
+  caddy:
+    external: true
   # Attach the service to the 'laravel' network.
   # -----------------------------------------------------------
   # This custom network allows all services within it to communicate using their service names as hostnames.
