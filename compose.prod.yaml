@@ -45,6 +45,7 @@ services:
       - .env
     networks:
       - rockag-crew-production
+      - smtp
     healthcheck:
       test: ["CMD-SHELL", "php-fpm-healthcheck || exit 1"]
       interval: 10s
@@ -85,6 +86,8 @@ services:
 
 networks:
   caddy:
+    external: true
+  smtp:
     external: true
   # Attach the service to the 'laravel' network.
   # -----------------------------------------------------------
