@@ -22,7 +22,15 @@
     ```
     docker compose -f compose.dev.yaml exec workspace php artisan migrate
     ```
-6. Die App sollte jetzt unter [http://localhost](http://localhost) erreichbar sein
+6. App-Key generieren
+    ```
+    docker compose -f compose.dev.yaml exec workspace php artisan key:generate
+    ```
+7. Services neu starten
+    ```
+    docker compose -f compose.dev.yaml up -d
+    ```
+8. Die App sollte jetzt unter [http://localhost](http://localhost) erreichbar sein
 
 ## Wichtige Befehle
 
@@ -31,7 +39,13 @@
 In diesem Container laufen Compose, Node, NPM, etc. Alle Artisan-Befehle müssen in diesem Container ausgeführt werden.
 
 ```
-docker compose -f compose.dev.yaml exec workspace bash
+docker compose -f <<Compose-File>> exec workspace bash
+```
+
+### Admin-Benutzer verwalten
+Die Benutzerverwaltung ist aktuell nur über das Terminal möglich:
+```
+docker compose -f <<Compose-File>> exec workspace php artisan app:admin-users
 ```
 
 ## Credits
