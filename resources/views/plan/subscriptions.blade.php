@@ -26,7 +26,7 @@
         {{-- Search --}}
         <div class="w-full mb-2">
             <p class="mb-2 font-bold">{{ __('shift.searchFormIntro') }}</p>
-            <form action="{{ url()->full() }}" method="GET">
+            <form action="{{ route('plan.subscriptions', ['plan' => $plan]) }}" method="GET">
                 @if(request()->get('orderBy', ''))
                     <input type="hidden" name="orderBy" value="{{ request()->get('orderBy', '') }}">
                 @endif

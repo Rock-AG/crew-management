@@ -2,7 +2,7 @@
 
 namespace App\Providers;
 
-use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -21,6 +21,6 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         // Always generate https urls on production
-        \URL::forceHttps(app()->isProduction());
+        URL::forceHttps(app()->isProduction());
     }
 }
