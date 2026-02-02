@@ -122,7 +122,7 @@ class Plan extends Model
         }
 
         if ($search != "") {
-            $out->where('title', 'like', '%' . $search . '%');
+            $out->where('title', 'ILIKE', '%' . $search . '%');
         }
 
         return $out;
