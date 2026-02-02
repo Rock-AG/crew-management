@@ -95,7 +95,14 @@ COPY --from=builder /usr/local/bin/docker-php-ext-* /usr/local/bin/
 RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
 
 # Enable PHP-FPM status page by modifying zz-docker.conf with sed
-RUN sed -i '/\[www\]/a pm.status_path = /status' /usr/local/etc/php-fpm.d/zz-docker.conf
+# This original version using sed might append a line behind a comment that contains [www],
+# so that pm.status_path lands outside of the pool config. The config is then invalid and php-fpm won't start
+# Original:
+#RUN sed -i '/\[www\]/a pm.status_path = /status' /usr/local/etc/php-fpm.d/zz-docker.conf
+
+# Fix: We just append a new [www] config at the bottom, php-fpm doesn't care if there are multiple pool config blocks
+RUN printf "[www]\npm.status_path = /status\n" >> /usr/local/etc/php-fpm.d/zz-docker.conf
+
 # Update the variables_order to include E (for ENV)
 #RUN sed -i 's/variables_order = "GPCS"/variables_order = "EGPCS"/' "$PHP_INI_DIR/php.ini"
 
