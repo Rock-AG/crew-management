@@ -34,18 +34,25 @@
 
 ## Wichtige Befehle
 
-### In den Workspace-Container wechseln
+### In den Workspace-Container wechseln (nur lokal)
 
-In diesem Container laufen Compose, Node, NPM, etc. Alle Artisan-Befehle müssen in diesem Container ausgeführt werden.
+In diesem Container laufen in der lokalen Installation Compose, Node, NPM, etc. Alle Artisan-Befehle müssen in diesem Container ausgeführt werden.
 
 ```
-docker compose -f <<Compose-File>> exec workspace bash
+docker compose -f compose.dev.yaml exec workspace bash
 ```
 
 ### Admin-Benutzer verwalten
 Die Benutzerverwaltung ist aktuell nur über das Terminal möglich:
+
+#### Lokal
 ```
-docker compose -f <<Compose-File>> exec workspace php artisan app:admin-users
+docker compose -f compose.dev.yaml exec workspace php artisan app:admin-users
+```
+
+#### Server
+```
+docker compose -f compose.prod.yaml exec php-fpm php artisan app:admin-users
 ```
 
 ## Credits
